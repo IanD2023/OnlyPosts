@@ -1,0 +1,112 @@
+
+<div class="fixed flex flex-col w-full justify-start items-center shadow-lg bg-white" id="header">
+       
+            <div *ngIf="auth" class="shadow-lg flex mx-0 bg-blue-500 p-4 justify-between" style="width: 100%;" >
+
+                <div class="flex h-12 flex-shrink-0 justify-center items-center">
+
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </div>
+
+                    <span class="ml-2 flex flex-shrink-0 items-center justify-center ">
+                        {{authenticated.name}}
+                    </span>
+    
+                </div>
+
+                  <div class="self-end">
+                    <button  class="focus:outline-none focus:ring focus:border-blue-500 mt-2 bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded"
+                    (click)="toggleDiv()"
+                    >
+                      New post
+                      </button> 
+                  </div>
+
+                  
+            </div>
+
+            
+
+        <div class="hidden justify-center flex mt-40 items-center flex-col" id="newpost">
+
+
+        <form (ngSubmit)="submit()" [formGroup]="createPostForm" #formDir="ngForm" 
+        class="flex flex-col rounded overflow-hidden shadow-lg bg-gray-200 p-4 m-2 justify-between" style="min-width: 400px;">
+ 
+            <div class="flex justify-start items-start pb-4" >
+            
+            <button (click)="fechaDiv()" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            </button>
+
+            </div>
+
+            <div class="pt-3">
+                
+            <input  formControlName="title"  autofocus type="text" class="mb-2 focus:outline-none pr-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6" placeholder="Titulo">    
+            <textarea formControlName="body" rows="4" class="focus:outline-none resize rounded-md block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Escreva seus pensamentos aqui..."></textarea>                   
+            
+            <div *ngIf="title.errors?.['required'] || body.errors?.['required'];else enabledButton">
+            </div>   
+
+            <ng-template #enabledButton>
+            <button  class="focus:outline-none focus:ring focus:border-blue-500 mt-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded" style="width: 100%">
+                Publicar
+            </button> 
+            </ng-template>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="bg-blue-100 w-full" style="margin-top: 100px;">    
+
+    <div class="bg-white flex flex-col items-center justify-center self-center" 
+ *ngFor="let post of listPosts" id="showposts">
+
+    <div class="flex flex-col max-w-sm rounded overflow-hidden shadow-lg bg-gray-200 p-2 m-2">
+        
+        <div  class="flex justify-between ">
+
+        <span class="self-start flex">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 ml-2 mr-2 ">
+                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+            </svg>
+            {{post.userName}}
+        </span>  
+        
+        <span class="mr-4">
+
+        <app-edit [post] = "post"></app-edit> 
+        <app-delete [post]= "post" > </app-delete> 
+
+        </span>
+
+        </div>
+                
+        <div class="px-6 py-4">
+            <span class="font-bold text-xl mb-2">{{post.title}}</span>
+            <p class="text-gray-700 text-base mt-2">
+            {{post.body}}
+            </p>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            
+
+            <app-comments [post]="post" ></app-comments>
+        </div>
+    </div>
+    
+</div>
+
+</div>
+
+
+

@@ -1,0 +1,7 @@
+<form  (ngSubmit)="submit()" [formGroup]="editComment" #formDir="ngForm" id="editComment">
+    <textarea  formControlName="body" rows="4" class="focus:outline-none resize rounded-md block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " 
+    placeholder="Digite aqui seu comentário"></textarea> 
+    <button  type="submit" class="focus:outline-none focus:ring focus:border-blue-500 mt-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+        Salvar
+    </button>
+</form>   
